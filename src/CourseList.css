@@ -1,5 +1,10 @@
 
+.card {
+    margin: 5px;
+}
+
 .course-list {
+    margin: 5px;
     display: grid;
     grid-template-columns: repeat(auto-fill, 14rem);
 }
@@ -9,10 +14,11 @@
     flex-direction: column;
     align-items: start;
     height: 200px;
+    width: 200px;
 }
 
 .card-text:nth-last-child(2){
-    height: 150px;
     border-bottom: 1px solid #848080;
+    height: 100px;
+    width: 180px;
 }
-
