@@ -1,6 +1,12 @@
 
 .card {
+    display: flex;  
     margin: 5px;
+    align-items: center;
+}
+
+.card > h5{
+    padding-top: 10px;
 }
 
 .course-list {
@@ -15,6 +21,7 @@
     align-items: start;
     height: 200px;
     width: 200px;
+    padding: 5px;
 }
 
 .card-text:nth-last-child(2){

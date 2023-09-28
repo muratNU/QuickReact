@@ -2,7 +2,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Banner from './Banner';
-import CourseList from './CourseList';
+import TermPage from './TermPage';
 import { useJsonQuery } from './utilities/fetch';
 
 const App = () => {
@@ -24,7 +24,7 @@ const App = () => {
     return (
       <div>
         <Banner title={data.title} />
-        <CourseList courses={data.courses} />
+        <TermPage courses={data.courses}/>
       </div>
     );
 };
