@@ -1,17 +1,13 @@
 
-import './CourseList.css'
+import './CourseList.css';
+import Course from './Course';
 
-const CourseList = ({ courses, term }) => {
+const CourseList = ({ courses, selected, toggleSelected }) => {
     return (
         <div className='course-list'>
-            {Object.entries(courses).map(([key, value]) => (
-                <div key={key} className='card'>
-                    <h5 className="card-title">{`${value.term} CS ${value.number}`}</h5>
-                    <div className='card-body'>
-                        <p className="card-text">{value.title}</p>
-                        <p className="card-text">{value.meets}</p>
-                    </div>
-                </div>
+            {Object.entries(courses).map(([courseCode, course]) => (
+                <Course key={courseCode} courseCode={courseCode} course={course} 
+                selected={selected} toggleSelected={toggleSelected}/>
             ))}
         </div>
     );

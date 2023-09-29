@@ -1,0 +1,30 @@
+
+.card {
+    display: flex;  
+    margin: 5px;
+    align-items: center;
+}
+
+.card.selected {
+    background-color:lemonchiffon;
+    color: green;
+}
+
+.card > h5{
+    padding-top: 10px;
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    height: 200px;
+    width: 200px;
+    padding: 5px;
+}
+
+.card-text:nth-last-child(2){
+    border-bottom: 1px solid #848080;
+    height: 100px;
+    width: 180px;
+}

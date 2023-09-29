@@ -20,17 +20,29 @@ const Term = ({selection}) => (
 
 const TermPage = ({courses}) => {
     const [selection, setSelection] = useState(() => Object.keys(terms)[0]);
+    const [selected, setSelected] = useState([]);
+
+    const toggleSelected = (courseCode) => setSelected(
+      selected.includes(courseCode)
+      ? selected.filter(x => x !== courseCode)
+      : [...selected, courseCode]
+    );
+    
     return (
       <div>
         <TermSelector selection={selection} setSelection={setSelection} />
         <Term selection={selection} />
         <CourseList courses={
+
+            // Using Object.entries instead Object.values
+            // because CourseList component makes use of the keys
             Object.fromEntries(Object.entries(courses).filter(
                 ([, value]) => (
                     value.term === terms[selection]
                 )
             ))
-        } />
+
+        } selected={selected} toggleSelected={toggleSelected} />
       </div>
     );
 }

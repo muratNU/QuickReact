@@ -5,6 +5,8 @@
     align-items: center;
 }
 
+
+
 .card > h5{
     padding-top: 10px;
 }
@@ -15,17 +17,4 @@
     grid-template-columns: repeat(auto-fill, 14rem);
 }
 
-.card-body{
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    height: 200px;
-    width: 200px;
-    padding: 5px;
-}
 
-.card-text:nth-last-child(2){
-    border-bottom: 1px solid #848080;
-    height: 100px;
-    width: 180px;
-}
