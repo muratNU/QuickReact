@@ -1,4 +1,5 @@
 
-.btn-check{
+.btn-group > * {
     margin: 5px;
+    
 }

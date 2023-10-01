@@ -1,7 +1,11 @@
 
 import CourseList from './CourseList';
 import TermSelector from'./TermSelector';
+import Modal from './Modal';
+import Cart from './Cart';
 import {useState} from 'react';
+import './TermPage.css'
+
 
 // to-do: Gives a warning 
 // due to inconsistent export usage,
@@ -21,6 +25,10 @@ const Term = ({selection}) => (
 const TermPage = ({courses}) => {
     const [selection, setSelection] = useState(() => Object.keys(terms)[0]);
     const [selected, setSelected] = useState([]);
+    const [open, setOpen] = useState(false);
+
+    const openModal = () => setOpen(true);
+    const closeModal = () => setOpen(false);
 
     const toggleSelected = (courseCode) => setSelected(
       selected.includes(courseCode)
@@ -30,7 +38,17 @@ const TermPage = ({courses}) => {
     
     return (
       <div>
-        <TermSelector selection={selection} setSelection={setSelection} />
+        <div className='btn-container'>
+            <TermSelector selection={selection} setSelection={setSelection} />
+            <button className="btn btn-outline-dark" 
+            onClick={openModal}><i className="bi bi-cart4"> 
+                Shopping Cart
+                </i>
+            </button>
+        </div>
+        <Modal open={open} close={closeModal}>
+            <Cart selected={Object.entries(courses).filter(([key]) => (selected.includes(key))) } />
+        </Modal>
         <Term selection={selection} />
         <CourseList courses={
 
@@ -41,7 +59,7 @@ const TermPage = ({courses}) => {
                     value.term === terms[selection]
                 )
             ))
-
+        
         } selected={selected} toggleSelected={toggleSelected} />
       </div>
     );

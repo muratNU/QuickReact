@@ -1,15 +1,5 @@
 
-.card {
-    display: flex;  
-    margin: 5px;
-    align-items: center;
-}
 
-
-
-.card > h5{
-    padding-top: 10px;
-}
 
 .course-list {
     margin: 5px;
