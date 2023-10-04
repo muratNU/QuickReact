@@ -1,9 +1,11 @@
 
 import './Course.css'
 
-const Course = ({courseCode, course, selected, toggleSelected}) => (
-    <div key={courseCode} className={`card ${selected.includes(courseCode) ? 'selected' : ''}`} 
-    onClick={() => toggleSelected(courseCode)}>
+const Course = ({courseCode, course, unselectable, selected, toggleSelected,}) => (
+    <div key={courseCode} className={unselectable ? 
+        'card unselectable' :
+        `card ${selected.includes(courseCode) ? 'selected' : ''}` } 
+    onClick={() => {!unselectable && toggleSelected(courseCode)}}>
         <h5 className="card-title">{`${course.term} CS ${course.number}`}</h5>
         <div className='card-body'>
             <p className="card-text">{course.title}</p>

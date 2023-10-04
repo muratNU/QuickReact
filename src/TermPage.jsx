@@ -1,20 +1,10 @@
 
 import CourseList from './CourseList';
-import TermSelector from'./TermSelector';
+import TermSelector, { terms } from'./TermSelector';
 import Modal from './Modal';
 import Cart from './Cart';
 import {useState} from 'react';
 import './TermPage.css'
-
-
-// to-do: Gives a warning 
-// due to inconsistent export usage,
-// read and understand the reason
-export const terms = {
-    fall: "Fall",
-    spring: "Spring",
-    winter: "Winter"
-}
 
 const Term = ({selection}) => (
     <div className="card" >
@@ -59,8 +49,10 @@ const TermPage = ({courses}) => {
                     value.term === terms[selection]
                 )
             ))
-        
-        } selected={selected} toggleSelected={toggleSelected} />
+
+        } selected={
+            selected.filter(courseCode => terms[selection][0].toUpperCase() === courseCode[0])
+        } toggleSelected={toggleSelected} />
       </div>
     );
 }

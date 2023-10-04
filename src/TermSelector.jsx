@@ -1,6 +1,10 @@
-
-import { terms } from './TermPage';
 import './TermSelector.css'
+
+export const terms = {
+    fall: "Fall",
+    spring: "Spring",
+    winter: "Winter"
+}
 
 const TermButton = ({term, selection, setSelection}) => (
     <div> 
