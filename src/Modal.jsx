@@ -12,6 +12,7 @@ const Modal = ({ children, open, close }) => (
     <div className="modal-dialog" role="document">
       <div className="modal-content">
         <div className="modal-header">
+          <h1>Shopping Cart</h1>
           <button type="button" className="btn-close" aria-label="Close"
             onClick={close}
           />

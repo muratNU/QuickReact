@@ -51,7 +51,7 @@ const TermPage = ({courses}) => {
             ))
 
         } selected={
-            selected.filter(courseCode => terms[selection][0].toUpperCase() === courseCode[0])
+            selected.filter(courseCode => terms[selection][0] === courseCode[0])
         } toggleSelected={toggleSelected} />
       </div>
     );
