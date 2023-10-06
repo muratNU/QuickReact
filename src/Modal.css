@@ -20,10 +20,11 @@
 
 .modal-header {
   display: flex;
-  /* margin-left: auto; */
 }
 
 .modal-header > h1{
   left: 5px;
   bottom: 0px;
 }
+
+
