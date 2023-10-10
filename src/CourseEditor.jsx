@@ -1,14 +1,49 @@
 import { useFormData } from './utilities/useFormData';
 import { useNavigate } from 'react-router-dom';
 
+const validateMeetingSchedule = (val) => {
+  const dateTime = val.split(" ");
+  if (dateTime.length !== 2)
+    return [false, "Meeting times should include the meeting days and times, adopting this format: 'day(s) 00:00-23:59'"];
+  if(dateTime[0].indexOf('M') === -1 && dateTime[0].indexOf('W') === -1 && dateTime[0].indexOf('F') === -1 
+      && dateTime[0].indexOf('Tu') === -1 && dateTime[0].indexOf('Th') === -1 )
+    return [false, "Meeting day should include at least one of the following expressions to represent the meeting day(s) \
+              M Tu W Th F"];
+  if((dateTime[0].indexOf('M') > -1 || dateTime[0].indexOf('W') > -1 
+      || dateTime[0].indexOf('F') > -1) && !/^(M)?(W)?(F)?$/.test(dateTime[0]))
+    return [false, "Courses that meet on Mondays or Wednesdays or Fridays can only be combined with each other and \
+          should be typed as M or W or F "];
+  if((dateTime[0].indexOf('Tu') > -1 || dateTime[0].indexOf('Th') > -1 ) && !/^(Tu)?(Th)?$/.test(dateTime[0]))
+    return [false, "Courses that meet on Tuesday or Thursdays can only be combined with each other and should be typed as\
+            Tu or Th"];
+
+  if(dateTime[1].split("-").length !== 2)
+    return [false, "Meeting times must have the following format: 00:00-23:59"]
+
+  const [start, end] = dateTime[1].split("-");
+  if(!/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(start) || !/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(end))
+    return [false, "Meeting times must have the following format: 00:00-23:59"]  
+  
+  const startTime = Number(start.split(':')[0])*60 + Number(start.split(':')[1]);
+  const endTime = Number(end.split(':')[0])*60 + Number(end.split(':')[1])
+
+  if (startTime >= endTime)
+    return [false, "starting time should be strictly less than the ending time"];
+  if (endTime - startTime > 180)
+    return [false, "No course can meet longer than 3 hours"];
+  
+  return [true, ''];
+}
+
 // this example is for user data validation
 // I would have to change it for title and meeting times for a course
 const validateCourseData = (key, val) => {
   switch (key) {
-    case 'firstName': case 'lastName':
-      return /(^\w\w)/.test(val) ? '' : 'must be least two characters';
-    case 'email':
-      return /^\w+@\w+[.]\w+/.test(val) ? '' : 'must contain name@domain.top-level-domain';
+    case 'courseTitle':
+      return  val.length >= 2 ? '' : 'must be least two characters';
+    case 'courseMeets':
+      const [isCorrectFormat, errorMessage] = validateMeetingSchedule(val);
+      return (val === '' || isCorrectFormat) ? '' : errorMessage;
     default: return '';
   }
 };
@@ -37,7 +72,7 @@ const CourseEditor = ({courseInput}) => {
   //const [update, result] = useDbUpdate(`/users/${user.id}`);
   const [state, change] = useFormData(validateCourseData, courseInput);
   const navigate = useNavigate(); 
-
+  
   const submit = (evt) => {
     evt.preventDefault();
     if (!state.errors) {

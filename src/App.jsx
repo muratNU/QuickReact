@@ -22,7 +22,7 @@ const App = () => {
   if (!data) {
     return null;
   }
-
+  
   return (
     <BrowserRouter>
       <Routes>

@@ -1,7 +1,7 @@
 
 import './Course.css'
 
-const Course = ({courseCode, course, unselectable, selected, toggleSelected,}) => (
+const Course = ({courseCode, course, unselectable, selected, toggleSelected}) => (
     <div key={courseCode} className={unselectable ? 
         'card unselectable' :
         `card ${selected.includes(courseCode) ? 'selected' : ''}` } 
