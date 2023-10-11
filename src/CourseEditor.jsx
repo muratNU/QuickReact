@@ -12,14 +12,14 @@ const validateMeetingSchedule = (val) => {
   if((dateTime[0].indexOf('M') > -1 || dateTime[0].indexOf('W') > -1 
       || dateTime[0].indexOf('F') > -1) && !/^(M)?(W)?(F)?$/.test(dateTime[0]))
     return [false, "Courses that meet on Mondays or Wednesdays or Fridays can only be combined with each other and \
-          should be typed as M or W or F "];
+          should be typed as M or W or F following the order"];
   if((dateTime[0].indexOf('Tu') > -1 || dateTime[0].indexOf('Th') > -1 ) && !/^(Tu)?(Th)?$/.test(dateTime[0]))
     return [false, "Courses that meet on Tuesday or Thursdays can only be combined with each other and should be typed as\
-            Tu or Th"];
+            Tu or Th following the order"];
 
   if(dateTime[1].split("-").length !== 2)
     return [false, "Meeting times must have the following format: 00:00-23:59"]
-
+  
   const [start, end] = dateTime[1].split("-");
   if(!/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(start) || !/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(end))
     return [false, "Meeting times must have the following format: 00:00-23:59"]  

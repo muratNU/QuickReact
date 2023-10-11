@@ -1,20 +1,14 @@
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Banner from './Banner';
 import TermPage from './TermPage';
-import { useJsonQuery } from './utilities/fetch';
 import CourseEditor from './CourseEditor';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useDbData } from './utilities/firebase';
 
 const App = () => {
-  const [data, isLoading, error] = 
-    useJsonQuery("https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php");
-
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
+  const [data, error] = useDbData();
+  
   if (error) {
     return <p>Error occurred: {error.message}</p>;
   }
