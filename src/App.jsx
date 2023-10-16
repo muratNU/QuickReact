@@ -26,7 +26,7 @@ const App = () => {
             <TermPage courses={data.courses}/>
           </div>
         } />
-        <Route path="/CourseEditor" element={<CourseEditor courseInput={{title: "", meets: ""}} />} />
+        <Route path="/CourseEditor/:courseCode" element={<CourseEditor courseInput={{title: "", meets: ""}} />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,5 +1,7 @@
 import { useFormData } from './utilities/useFormData';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDbUpdate } from './utilities/firebase';
+import { useLocation } from 'react-router-dom';
 
 const validateMeetingSchedule = (val) => {
   const dateTime = val.split(" ");
@@ -35,13 +37,11 @@ const validateMeetingSchedule = (val) => {
   return [true, ''];
 }
 
-// this example is for user data validation
-// I would have to change it for title and meeting times for a course
 const validateCourseData = (key, val) => {
   switch (key) {
-    case 'courseTitle':
+    case 'title':
       return  val.length >= 2 ? '' : 'must be least two characters';
-    case 'courseMeets':
+    case 'meets':
       const [isCorrectFormat, errorMessage] = validateMeetingSchedule(val);
       return (val === '' || isCorrectFormat) ? '' : errorMessage;
     default: return '';
@@ -61,36 +61,33 @@ const ButtonBar = ({message, disabled}) => {
   const navigate = useNavigate();
   return (
     <div className="d-flex">
-      <button type="button" className="btn btn-outline-dark me-2" onClick={() => navigate(-1)}>Cancel</button>
+      <button type="button" className="btn btn-outline-dark me-2" onClick={() => navigate("/")}>Cancel</button>
       <button type="submit" className="btn btn-primary me-auto" disabled={disabled}>Submit</button>
       <span className="p-2">{message}</span>
     </div>
   );
 };
 
-const CourseEditor = ({courseInput}) => {
-  //const [update, result] = useDbUpdate(`/users/${user.id}`);
-  const [state, change] = useFormData(validateCourseData, courseInput);
-  const navigate = useNavigate(); 
-  
+//{courseInput}
+const CourseEditor = () => {
+  const location = useLocation();
+  const [update, result] = useDbUpdate(`/courses/${location.state.courseCode}`);
+  const [state, change] = useFormData(validateCourseData, {title: location.state.title, meets: location.state.meets});
+
   const submit = (evt) => {
     evt.preventDefault();
     if (!state.errors) {
-      //update(state.values);
+      update(state.values);
     }
   };
 
   return (
     <form onSubmit={submit} noValidate className={state.errors ? 'was-validated' : null}>
-      <InputField name="courseTitle" text="Course Title" state={state} change={change} />
-      <InputField name="courseMeets" text="Meeting times for the course" state={state} change={change} />
-      {/* <ButtonBar message={result?.message} /> */}
-      <div className="d-flex">
-        <button type="button" className="btn btn-outline-dark me-2" onClick={() => navigate('/')}>Cancel</button>
-        <button type="submit" className="btn btn-primary">Submit</button>
-      </div>
+      <InputField name="title" text="Course Title" state={state} change={change} />
+      <InputField name="meets" text="Meeting times for the course" state={state} change={change} />
+      <ButtonBar message={result?.message}/>
     </form>
-  )
+  );
 };
 
 export default CourseEditor;

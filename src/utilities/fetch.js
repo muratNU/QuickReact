@@ -16,7 +16,7 @@ const saveDateToFirebase = async (data) => {
     }catch(err){
         console.error("Failed to add data:", err.message);
     }
-}
+}   
 
 export const useJsonQuery = (url) => {
     const { data, isLoading, error } = useQuery([url], () => fetchJson(url));
