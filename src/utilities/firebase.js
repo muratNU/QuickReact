@@ -28,17 +28,17 @@ const analytics = getAnalytics(app);
 // Initialize Realtime Database and get a reference to the service
 export const database = getDatabase(app);
 
-export const useDbData = () => {
+export const useDbData = (path) => {
   const [data, setData] = useState();
   const [error, setError] = useState(null);
   
   useEffect(() => (
-    onValue(ref(database), (snapshot) => {
+    onValue(ref(database, path), (snapshot) => {
       setData( snapshot.val() );
     }, (error) => {
       setError(error);
     })
-  ), [ database ]);
+  ), [ path ]);
 
   return [ data, error ];
 };

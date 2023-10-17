@@ -5,6 +5,10 @@
     align-items: center;
 }
 
+.card:hover {
+    cursor: pointer;
+}
+
 .card.selected {
     background-color:lemonchiffon;
     color: green;

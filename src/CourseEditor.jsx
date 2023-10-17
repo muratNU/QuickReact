@@ -68,7 +68,6 @@ const ButtonBar = ({message, disabled}) => {
   );
 };
 
-//{courseInput}
 const CourseEditor = () => {
   const location = useLocation();
   const [update, result] = useDbUpdate(`/courses/${location.state.courseCode}`);

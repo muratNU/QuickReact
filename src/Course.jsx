@@ -3,7 +3,7 @@ import './Course.css'
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-const Course = ({courseCode, course, unselectable, selected, authUser, toggleSelected}) => {
+const Course = ({courseCode, course, unselectable, selected, admin, toggleSelected}) => {
     return (
         <div key={courseCode} className={unselectable ? 
             'card unselectable' :
@@ -13,12 +13,12 @@ const Course = ({courseCode, course, unselectable, selected, authUser, toggleSel
             <div className='card-body'>
                 <p className="card-text">{course.title}</p>
                 <p className="card-text">{course.meets}</p>
-                {authUser &&
-                <Link to={`/CourseEditor/${courseCode}`}  
-                state={{ courseCode: courseCode, title: course.title, meets: course.meets }}>
-                    Edit Course
-                </Link>}
             </div>
+            {admin &&
+            <Link to={`/CourseEditor/${courseCode}`}  
+            state={{ courseCode: courseCode, title: course.title, meets: course.meets }}>
+                Edit Course
+            </Link>}
         </div>);
 };
 

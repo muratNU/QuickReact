@@ -1,22 +1,23 @@
-
 import './CourseList.css';
 import Course from './Course';
 import { getConflictingCourses } from './utilities/catchConflicts';
-import { useAuthState } from "./utilities/firebase"
+import { useProfile } from './utilities/profile';
 
 const CourseList = ({ courses, selected, toggleSelected }) => {
 
     // Whenever a new course is selected or deselected this component
     // will get re-render so there is no need useState for conflicting courses
     const conflictingCourses = getConflictingCourses(courses, selected);
-    const [user] = useAuthState();
 
+    // syntax does not allow [{,isAdmin}]
+    const [{user,isAdmin}] = useProfile();
+    
     return (
         <div className='course-list'>
             {Object.entries(courses).map(([courseCode, course]) => (
                 <Course key={courseCode} courseCode={courseCode} course={course} 
                 unselectable={conflictingCourses.has(courseCode)} selected={selected} 
-                authUser={!!user} toggleSelected={toggleSelected}/>
+                admin={!!isAdmin} toggleSelected={toggleSelected}/>
             ))}
         </div>
     );

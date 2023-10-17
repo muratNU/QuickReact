@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useDbData } from './utilities/firebase';
 
 const App = () => {
-  const [data, error] = useDbData();
+  const [data, error] = useDbData("/courses/");
   
   if (error) {
     return <p>Error occurred: {error.message}</p>;
@@ -22,11 +22,11 @@ const App = () => {
       <Routes>
         <Route path="/" element={
           <div>
-            <Banner title={data.title} />
-            <TermPage courses={data.courses}/>
+            <Banner title="CS Courses for 2018-2019" />
+            <TermPage courses={data}/>
           </div>
         } />
-        <Route path="/CourseEditor/:courseCode" element={<CourseEditor courseInput={{title: "", meets: ""}} />} />
+        <Route path="/CourseEditor/:courseCode" element={<CourseEditor/>} />
       </Routes>
     </BrowserRouter>
   );
