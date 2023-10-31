@@ -2,8 +2,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase, onValue, ref, update } from "firebase/database";
-import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+import { getDatabase, onValue, ref, update, connectDatabaseEmulator } from "firebase/database";
+import { getAuth, GoogleAuthProvider, onAuthStateChanged,
+   signInWithPopup, signOut, signInWithCredential, connectAuthEmulator } from 'firebase/auth';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -79,3 +80,18 @@ export const useAuthState = () => {
 
   return [user];
 };
+
+if(!globalThis.EMULATION && import.meta.env.MODE === 'development'){
+  console.log("started in development");
+  connectAuthEmulator(getAuth(app), "http://127.0.0.1:9099");
+  connectDatabaseEmulator(database, "localhost", 9000);
+  
+  // sign in the test user
+  // signInWithCredential(getAuth(app), GoogleAuthProvider.credential(
+  //   '{"sub": "qEvli4msW0eDz5mSVO6j3W7i8w1k", "email": "tester@gmail.com", \
+  //   "displayName":"Test User", "email_verified": true}'
+  // ));
+ 
+  // set flag to avoid connecting twice, e.g., because of an editor hot-reload
+  globalThis.EMULATION = true;
+}

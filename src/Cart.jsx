@@ -1,6 +1,5 @@
 import './Cart.css';
 
-
 const Cart = ({selected}) => (
   <div className="cart">
     {
